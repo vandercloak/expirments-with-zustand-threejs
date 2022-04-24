@@ -1,6 +1,5 @@
 import create, { State, StateCreator, StoreMutatorIdentifier } from "zustand";
 import { immer } from "zustand/middleware/immer";
-
 export function createImmerStore<
   T extends State,
   Mos extends [StoreMutatorIdentifier, unknown][] = []

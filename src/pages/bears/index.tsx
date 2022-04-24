@@ -46,16 +46,14 @@ export const useBears = createImmerStore<BearStore>((set, get, api) => ({
 
 function BearContainer() {
   return (
-    <Container className="mt-5">
-      <Row>
-        <Col xs={8}>
-          <BearTable />
-        </Col>
-        <Col xs={4}>
-          <BearCanvas />
-        </Col>
-      </Row>
-    </Container>
+    <Row className="mt-5 mx-1">
+      <Col xs={8}>
+        <BearTable />
+      </Col>
+      <Col xs={4}>
+        <BearCanvas />
+      </Col>
+    </Row>
   );
 }
 
