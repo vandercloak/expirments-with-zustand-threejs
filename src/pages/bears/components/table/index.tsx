@@ -4,9 +4,7 @@ import { bearTypeArr, useBears } from "../..";
 import { getRandomInt } from "../../../../util/random-int";
 
 const BearTable = () => {
-  const addBear = useBears((state) => state.addBear);
-  const getBear = useBears((state) => state.getBear);
-  const bears = useBears((state) => state.bears);
+  const { bears, addBear, getBear, deleteBear } = useBears();
 
   const handleAddBear = useCallback(() => {
     if (bears.length >= 6) {
@@ -34,6 +32,16 @@ const BearTable = () => {
   return (
     <div style={{ height: "100vh" }}>
       <h1 className="mt-3">Bear Tower</h1>
+      <p>
+        Why bears? Seems to be the{" "}
+        <a
+          href="https://codesandbox.io/s/github/pmndrs/zustand/tree/main/examples"
+          target="_blank"
+          rel="noreferrer"
+        >
+          zustand way.
+        </a>
+      </p>
       <div>
         <button className="btn btn-primary my-3" onClick={handleAddBear}>
           Add to Bear Tower
@@ -50,21 +58,24 @@ const BearTable = () => {
           </tr>
         </thead>
         <tbody>
-          {bears.map((bear) => (
-            <tr key={bear.id}>
-              <td>{bear.id}</td>
-              <td>{bear.name}</td>
-              <td>{bear.type}</td>
-              <td className="text-end">
-                <a href="/#" className="link-secondary me-2">
-                  Edit
-                </a>
-                <a href="/#" className="link-secondary">
-                  Delete
-                </a>
-              </td>
-            </tr>
-          ))}
+          {bears.map((bear) => {
+            return (
+              <tr key={bear.id}>
+                <td>{bear.id}</td>
+                <td>{bear.name}</td>
+                <td>{bear.type}</td>
+                <td className="text-end">
+                  <a
+                    href="/#"
+                    className="link-secondary"
+                    onClick={() => deleteBear(bear.id)}
+                  >
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>

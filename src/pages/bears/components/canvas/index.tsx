@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import { memo, Suspense } from "react";
-import Model from "../bear-model";
+import { memo } from "react";
+import Model from "../model";
 import {
   ContactShadows,
   Environment,
@@ -13,7 +13,7 @@ const BearCanvas = () => {
     <Canvas
       shadows
       dpr={[3, 3]}
-      camera={{ position: [0, 0, 20], fov: 50 }}
+      camera={{ position: [2, 2, 30], fov: 50 }}
       className="grabbable"
     >
       <OrbitControls

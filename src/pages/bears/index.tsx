@@ -1,5 +1,5 @@
 import { createImmerStore } from "../../store/create-immer-store";
-import BearTable from "./components/bear-table";
+import BearTable from "./components/table";
 import BearCanvas from "./components/canvas";
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -13,39 +13,40 @@ export type Bear = {
 
 interface BearStore {
   bears: Array<Bear>;
-  getBear: (id: number) => { bear: Bear; index: number } | undefined;
+  getBearIndex: (id: number) => number;
+  getBear: (id: number) => Bear | undefined;
   addBear: (bear: Bear) => void;
-  removeBear: (idx: number) => void;
+  deleteBear: (idx: number) => void;
 }
 
 export const useBears = createImmerStore<BearStore>((set, get, api) => ({
   bears: [],
+  getBearIndex: (id) => {
+    return get().bears.findIndex((bear) => bear.id === id);
+  },
   getBear: (id) => {
-    const bears = get().bears;
-    const bearIdx = bears.findIndex((bear) => bear.id === id);
-    if (bearIdx === -1) {
-      return;
-    }
-    return { index: bearIdx, bear: bears[bearIdx] };
+    return get().bears.find((bear) => bear.id === id);
   },
   addBear: (bear: Bear) => {
     return set((state) => {
       state.bears.push(bear);
     });
   },
-  removeBear: (idx: number) => {
+  deleteBear: (id: number) => {
     return set((state) => {
-      if (idx === -1) {
+      const index = api.getState().getBearIndex(id);
+      if (index === -1) {
+        // No bear to delete.
         return;
       }
-      state.bears.splice(idx, 1);
+      state.bears.splice(index, 1);
     });
   },
 }));
 
 function BearContainer() {
   return (
-    <Container>
+    <Container className="mt-5">
       <Row>
         <Col xs={8}>
           <BearTable />
